@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lvchenglong.blogbackend.mapper.CollectMapper">
+
+    <insert id="insert">
+        insert into collect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="fid != null">fid,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="module != null">module,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="fid != null">#{fid},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="module != null">#{module},</if>
+        </trim>
+    </insert>
+    <select id="selectUserCollect" resultType="com.lvchenglong.blogbackend.entity.Collect">
+        select * from collect where fid = #{fid} and user_id = #{userId} and module = #{module}
+    </select>
+    <delete id="deleteById">
+        delete from collect where id = #{id}
+    </delete>
+    <select id="selectByFidAndModule" resultType="java.lang.Integer">
+        select count(*) from collect where fid = #{fid} and module = #{module}
+    </select>
+    <select id="selectFidsByUserIdAndModule" resultType="java.lang.Integer">
+        select fid
+        from collect
+        where user_id = #{userId} and module = #{module}
+    </select>
+    <select id="selectUserIdsByFidAndModule" resultType="java.lang.Integer">
+        select user_id
+        from collect
+        where fid = #{fid} and module = #{module}
+    </select>
+</mapper>

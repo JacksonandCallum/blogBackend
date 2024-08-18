@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lvchenglong.blogbackend.mapper.LikesMapper">
+
+    <insert id="insert">
+        insert into likes
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="fid != null">fid,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="module != null">module,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="fid != null">#{fid},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="module != null">#{module},</if>
+        </trim>
+    </insert>
+    <select id="selectUserLikes" resultType="com.lvchenglong.blogbackend.entity.Likes">
+        select * from likes where fid = #{fid} and user_id = #{userId} and module = #{module} limit 1
+    </select>
+    <delete id="deleteById">
+        delete from likes where id = #{id}
+    </delete>
+    <select id="selectByFidAndModule" resultType="java.lang.Integer">
+        select count(*) from likes where fid = #{fid} and module = #{module}
+    </select>
+    <select id="selectFidsByUserIdAndModule" resultType="java.lang.Integer">
+        select fid
+        from likes
+        where user_id = #{userId} and module = #{module}
+    </select>
+    <select id="selectUserIdsByFidAndModule" resultType="java.lang.Integer">
+        select user_id
+        from likes
+        where fid = #{fid} and module = #{module}
+    </select>
+</mapper>
